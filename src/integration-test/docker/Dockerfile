@@ -31,5 +31,8 @@ EXPOSE 8888:8888
 EXPOSE 18080:18080
 EXPOSE 7077:7077
 
-# RUN THE SPARK JOB
-ENTRYPOINT ["spark-submit", "--class", "com.abhi.HelloWorld", "--master", "local[2]", "SparkIntegrationTestsAssembly.jar", "/input", "/output"]
+# RUN ALL SERVICES
+ENTRYPOINT ["/usr/bin/docker-quickstart"]
+
+# RUN SPARK JOB
+CMD ["spark-submit", "--class", "com.abhi.HelloWorld", "--master", "local[2]", "SparkIntegrationTestsAssembly.jar", "/input", "/output"]

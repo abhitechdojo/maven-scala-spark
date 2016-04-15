@@ -94,7 +94,7 @@
                         <configuration>
                             <images>
                                 <image>
-                                    <id>cloudera</id>
+                                    <id>cloudera/quickstart</id>
                                     <dockerFile>${project.basedir}/src/integration-test/docker/Dockerfile</dockerFile>
                                     <artifacts>
                                         <artifact>
@@ -116,26 +116,13 @@
                             <goal>start-containers</goal>
                         </goals>
                         <configuration>
-                            <!-- You can set forceCleanup to true to stop and remove started containers
-                                 at the end of the build even if the stop-containers goal is not executed
-                                 (useful for preventing Ctrl+C causing dangling containers) -->
-                            <forceCleanup>false</forceCleanup>
+                            <forceCleanup>true</forceCleanup>
                             <containers>
                                 <container>
-                                    <id>cloudera</id>
+                                    <id>cloudera/quickstart</id>
                                     <image>cloudera/quickstart</image>
-                                    <!--
-                                    <links>
-                                        <link>
-                                            <containerId>mongo</containerId>
-                                            <containerAlias>mongo</containerAlias>
-                                        </link>
-                                    </links>
-                                    <env>
-                                        <APP_MESSAGE>Hello, world!</APP_MESSAGE>
-                                    </env>
-                                    -->
-                                    <waitForStartup>Started Impala Server</waitForStartup>
+                                    <waitForStartup>Successfully stopped SparkContext</waitForStartup>
+                                    <startupTimeout>10000</startupTimeout>
                                 </container>
                             </containers>
                         </configuration>
