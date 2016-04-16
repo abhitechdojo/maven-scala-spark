@@ -94,7 +94,7 @@
                         <configuration>
                             <images>
                                 <image>
-                                    <id>cloudera/quickstart</id>
+                                    <id>myapp</id>
                                     <dockerFile>${project.basedir}/src/integration-test/docker/Dockerfile</dockerFile>
                                     <artifacts>
                                         <artifact>
@@ -104,6 +104,10 @@
                                         <artifact>
                                             <file>${project.build.directory}/test-classes/twitter.avro</file>
                                             <dest>/twitter.avro</dest>
+                                        </artifact>
+                                        <artifact>
+                                            <file>${project.build.directory}/test-classes/entrypoint.sh</file>
+                                            <dest>/entrypoint.sh</dest>
                                         </artifact>
                                     </artifacts>
                                 </image>
@@ -119,9 +123,9 @@
                             <forceCleanup>true</forceCleanup>
                             <containers>
                                 <container>
-                                    <id>cloudera/quickstart</id>
-                                    <image>cloudera/quickstart</image>
-                                    <waitForStartup>Successfully stopped SparkContext</waitForStartup>
+                                    <id>myapp</id>
+                                    <image>myapp</image>
+                                    <waitForStartup>Remoting shut down</waitForStartup>
                                     <startupTimeout>10000</startupTimeout>
                                 </container>
                             </containers>
@@ -149,9 +153,9 @@
                     <additionalClasspathElements>
                         <additionalClasspathElement>src/integration-test/resources</additionalClasspathElement>
                     </additionalClasspathElements>
-                    <systemProperties>
-                        <cloudera.base>http://${docker.containers.app.ports.8080/tcp.host}:${docker.containers.app.ports.8080/tcp.port}</cloudera.base>
-                    </systemProperties>
+                    <systemPropertyVariables>
+                        <webhdfscmd>http://192.168.99.101:50070/webhdfs/v1/output?op=LISTSTATUS</webhdfscmd>
+                    </systemPropertyVariables>
                 </configuration>
                 <executions>
                     <execution>
