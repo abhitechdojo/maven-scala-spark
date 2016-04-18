@@ -89,7 +89,6 @@ public class HelloWorldIT {
         HttpURLConnection httpCon = (HttpURLConnection) urlCon;
         httpCon.setInstanceFollowRedirects(false);
         String nextUrl = urlCon.getHeaderField("Location");
-        System.out.println(nextUrl);
         Pattern p = Pattern.compile("^http://([^:]*):50075(.*)$");
         Matcher m = p.matcher(nextUrl);
         String fileUrl = null;
