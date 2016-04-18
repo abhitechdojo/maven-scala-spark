@@ -8,7 +8,7 @@ ADD ./SparkIntegrationTestsAssembly.jar /
 ADD ./entrypoint.sh /
 ADD ./twitter.avro /
 
-EXPOSE 50070 8088 8042 4040
+EXPOSE 50070 50075 8088 8042 4040
 
 RUN chmod +x /entrypoint.sh
 CMD [""]

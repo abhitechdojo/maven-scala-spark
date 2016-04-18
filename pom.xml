@@ -125,7 +125,7 @@
                                 <container>
                                     <id>myapp</id>
                                     <image>myapp</image>
-                                    <waitForStartup>Remoting shut down</waitForStartup>
+                                    <waitForStartup>Successfully stopped SparkContext</waitForStartup>
                                     <startupTimeout>10000</startupTimeout>
                                 </container>
                             </containers>
@@ -146,16 +146,36 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.9.1</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.basedir}/src/integration-test/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.17</version>
                 <configuration>
-                    <testSourceDirectory>src/integration-test/java</testSourceDirectory>
-                    <additionalClasspathElements>
-                        <additionalClasspathElement>src/integration-test/resources</additionalClasspathElement>
-                    </additionalClasspathElements>
+                    <testSourceDirectory>${project.basedir}/src/integration-test/java</testSourceDirectory>
                     <systemPropertyVariables>
-                        <webhdfscmd>http://192.168.99.101:50070/webhdfs/v1/output?op=LISTSTATUS</webhdfscmd>
+                        <webhdfsurl>http://${docker.containers.myapp.ports.50070/tcp.host}:${docker.containers.myapp.ports.50070/tcp.port}</webhdfsurl>
+                        <datanodeurl>http://${docker.containers.myapp.ports.50075/tcp.host}:${docker.containers.myapp.ports.50075/tcp.port}</datanodeurl>
                     </systemPropertyVariables>
+                    <includes>
+                        <include>**/*IT.java</include>
+                    </includes>
                 </configuration>
                 <executions>
                     <execution>
@@ -218,6 +238,16 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-tools</artifactId>
+            <version>1.8.0</version>
         </dependency>
     </dependencies>
 </project>
