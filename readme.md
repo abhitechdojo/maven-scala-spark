@@ -1,4 +1,4 @@
-# Automated Integration Testing with Docker, Maven and Jenkins
+# Automated Integration Testing of Spark applications with Docker, Maven and Jenkins
 
 ## Introduction
 
